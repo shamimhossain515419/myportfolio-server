@@ -19,13 +19,18 @@ const client = new MongoClient(uri, {
 async function run() {
 
      // Connect the client to the server	(optional starting in v4.7)
-     await client.connect();
+     // await client.connect();
      const ProjectCollection = client.db("Myportfolio").collection("project");
      const ServicesCollection = client.db("Myportfolio").collection("services");
 
 
      app.get('/project', async (req, res) => {
           const result = await ProjectCollection.find().toArray();
+          res.send(result)
+     })
+     app.post('/project', async (req, res) => {
+          const data = req.body;
+          const result = ProjectCollection.insertOne(data);
           res.send(result)
      })
 
